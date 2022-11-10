@@ -1,4 +1,5 @@
 const hre = require("hardhat");
+// const { NftMarketPlace } = require("../context/NftMarketPlace.json")
 
 async function main() {
     const NFTMarketPlace = await hre.ethers.getContractFactory("NftMarketPlace");
