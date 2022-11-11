@@ -43,7 +43,6 @@ const Navbar = () => {
   
   const {connectWallet , checkaccount} = useContext(NFTContext)
   const { theme, setTheme } = useTheme();
-  console.log(connectWallet)
   return (
     <>
       <nav className="flexBetween w-full fixed z-10 p-4 flex-row border-b dark:bg-nft-dark bg-white dark:border-dark-1 border-gray-1">
@@ -92,7 +91,7 @@ const Navbar = () => {
             fs
           </div>
         </div>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={() => connectWallet}>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={connectWallet}>
           Button
         </button>
       </nav>
