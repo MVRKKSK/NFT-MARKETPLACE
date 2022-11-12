@@ -28,6 +28,7 @@ export const NFTProvider = ({ children }) => {
   // useEffect to run checkIfWalletIsConnected function when the page loads
   useEffect(() => {
     checkIfWalletIsConnected();
+    console.log(currentAccount)
   }, []);
 
   // function to connect metamask
@@ -40,7 +41,6 @@ export const NFTProvider = ({ children }) => {
       });
 
       setCurrentAccount(accounts[0]);
-
       window.location.reload();
     } catch (error) {
       console.log(error);
