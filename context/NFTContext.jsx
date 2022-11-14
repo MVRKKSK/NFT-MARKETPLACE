@@ -90,12 +90,31 @@ export const NFTProvider = ({ children }) => {
     } catch (e) {
       console.log('Error uploading file to IPFS', e);
     }
+  }
 
+  const fetchNFT = async () => {
+    const provider = new ethers.providers.JsonRpcProvider();
+    const contract = fetchContract(provider);
+
+    const data = await contract.fetchMarketItems();
+    const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+      const tokenURI = await contract.tokenURI(tokenId);
+      const { data: { image, description, name } } = await axios.get(tokenURI)
+      const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether')
+
+      return {
+        price,
+        tokenId: tokenId.toString(),
+        name, description, image, seller, owner, tokenURI
+      }
+    }))
+    return items;
+    console.log(data)
 
   }
 
   return (
-    <NFTContext.Provider value={{ nftCurrency, connectWallet, uploadFile, createNFT }} >
+    <NFTContext.Provider value={{ nftCurrency, connectWallet, uploadFile, createNFT, fetchNFT }} >
       {children}
     </NFTContext.Provider>
   )

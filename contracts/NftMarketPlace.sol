@@ -103,7 +103,7 @@ contract NftMarketPlace is ERC721URIStorage {
         payable(idToMarketItem[tokenId].seller).transfer(msg.value);
     }
 
-    function fetchMarketItems() public view returns(MarketItem[] memory){
+    function  MarketItems() public view returns(MarketItem[] memory){
         uint itemCount = _tokenId.current();
         uint unsoldItems = itemCount - _itemsSold.current();
         uint currentIndex = 0;

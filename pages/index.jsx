@@ -1,8 +1,16 @@
+import React , {useContext , useState , useEffect} from "react"
 import { CreatorCard, Footer, Navbar, NFTCard } from "../components/index"
 import images from "../assets/creator1.png"
 import Image from "next/image"
+import { NFTContext } from "../context/NFTContext"
 
 export default function Home() {
+  const {fetchNFT} = useContext(NFTContext)
+  const [nftData, setNftData] = useState([])
+  useEffect(() => {
+    fetchNFT().then((items) => {setNftData(items)})
+  }, [])
+  console.log(nftData)
   return (
     <div className="pt-4" >
       hello
