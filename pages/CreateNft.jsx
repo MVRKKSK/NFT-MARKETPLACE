@@ -99,7 +99,7 @@ const CreateNft = () => {
                 <div className="mt-7 w-full flex justify-end">
                     <button className="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 text-white font-poppins font-bold border outline-none p-4 mb-12 rounded-xl" onClick={async () => {
                         await createNFT(fromInput, fileurl, fileId)
-                        console.log("hello")
+                        console.log(createNFT(fromInput, fileurl, fileId))
                     }}>create NFT
                     </button>
                 </div>

@@ -67,9 +67,9 @@ export const NFTProvider = ({ children }) => {
     const price = ethers.utils.parseUnits(formInputPrice, 'ether');
     const contract = fetchContract(signer);
     const listingPrice = await contract.getListingPrice();
-    const transaction = await contract.createToken(url, price, { value: listingPrice.toString() })
-
+    const transaction = await contract.createToken(url, price, { value: listingPrice.toString()})
     await transaction.wait();
+    console.log(transaction)
 
   }
 
@@ -95,26 +95,44 @@ export const NFTProvider = ({ children }) => {
   const fetchNFT = async () => {
     const provider = new ethers.providers.JsonRpcProvider();
     const contract = fetchContract(provider);
+      const data = await contract.MarketItems();
+      const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+        const tokenURI = await contract.tokenURI(tokenId);
+        const { data: { image, description, name } } = await axios.get(tokenURI)
+        const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether')
+        return {
+          price,
+          tokenId: tokenId.toString(),
+          name, description, image, seller, owner, tokenURI
+        }
+      }))
+      // console.log(items)
+      return items; 
+  }
 
-    const data = await contract.fetchMarketItems();
+  const listNfts = async(type) => {
+    const web3modal = new web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection)
+    const signer = provider.getSigner();
+    const contract =  fetchContract(signer)
+    const data = type === "fetchListedItems" ? await contract.fetchItemsListed() : await contract.fetchMyNfts();
     const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
       const tokenURI = await contract.tokenURI(tokenId);
       const { data: { image, description, name } } = await axios.get(tokenURI)
       const price = ethers.utils.formatUnits(unformattedPrice.toString(), 'ether')
-
       return {
         price,
         tokenId: tokenId.toString(),
         name, description, image, seller, owner, tokenURI
       }
     }))
-    return items;
-    console.log(data)
-
+    // console.log(items)
+    return items; 
   }
 
   return (
-    <NFTContext.Provider value={{ nftCurrency, connectWallet, uploadFile, createNFT, fetchNFT }} >
+    <NFTContext.Provider value={{ nftCurrency, connectWallet, uploadFile, createNFT, fetchNFT , listNfts }} >
       {children}
     </NFTContext.Provider>
   )

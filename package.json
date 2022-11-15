@@ -9,6 +9,8 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@headlessui/react": "^1.7.4",
+        "@heroicons/react": "^2.0.13",
         "@openzeppelin/contracts": "4.5.0",
         "axios": "0.26.0",
         "ipfs-http-client": "^56.0.1",
