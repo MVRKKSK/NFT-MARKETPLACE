@@ -1,81 +1,65 @@
-import React from 'react'
+import Image from 'next/image';
+import React, { useState } from 'react'
+import { useTheme } from 'next-themes';
 
-const Modal = () => {
+
+const Modal = (props) => {
+    const { theme } = useTheme();
+    const [showModal, setShowModal] = useState(props.state);
+    const setStateModal = (data) => {
+        props.func(data)
+    }
     return (
-        <div className='mt-16'>
-            <button type="button" className="px-6
-      py-2.5
-      bg-blue-600
-      text-white
-      font-medium
-      text-xs
-      leading-tight
-      uppercase
-      rounded
-      shadow-md
-      hover:bg-blue-700 hover:shadow-lg
-      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-      active:bg-blue-800 active:shadow-lg
-      transition
-      duration-150
-      ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Launch demo modal
-            </button>
+        <div className="flex w-3/4 flex-col  p-6 dark:bg-white rounded-2xl bg-gray-700  z-10 absolute top-24 -left-1/3 justify-center items-center">
+            <p className='font-bold dark:text-black text-white text-center pt-4 pb-4 font-poppins text-xl sm:text-md '>Checkout with Wallet</p>
+            {showModal ? (
+                <div>
+                    <div className="flex flex-col p-4 dark:bg-white bg-gray-700  rounded-lg shadow-xl h-auto ">
+                        <div className="">
+                            <p className='font-semibold mb-4 px-4 dark:text-black text-white font-poppins text-sm sm:text-sm'>Purchase the NFT with Metamask</p>
+                        </div>
+                        <div className="flex flex-row items-start">
+                            <div className="">
 
-            <div className="modal fade fixed top-16 left-16 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-                id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog relative w-auto pointer-events-none">
-                    <div
-                        className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-                        <div
-                            className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-                            <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">Modal title</h5>
-                            <button type="button"
-                                className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-                                data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body relative p-4">
-                            Modal body text goes here.
-                        </div>
-                        <div
-                            className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                            <button type="button" className="px-6
-          py-2.5
-          bg-purple-600
-          text-white
-          font-medium
-          text-xs
-          leading-tight
-          uppercase
-          rounded
-          shadow-md
-          hover:bg-purple-700 hover:shadow-lg
-          focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0
-          active:bg-purple-800 active:shadow-lg
-          transition
-          duration-150
-          ease-in-out" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="px-6
-      py-2.5
-      bg-blue-600
-      text-white
-      font-medium
-      text-xs
-      leading-tight
-      uppercase
-      rounded
-      shadow-md
-      hover:bg-blue-700 hover:shadow-lg
-      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-      active:bg-blue-800 active:shadow-lg
-      transition
-      duration-150
-      ease-in-out
-      ml-1">Save changes</button>
+                                <h2 className="text-base mt-2 mx-4 font-poppins dark:text-black text-white font-semibold">
+                                    you are buying this nft from 0xce....acd
+                                </h2>
+                                <p className="text-base mt-2 mx-4 font-poppins dark:text-black text-white font-semibold">Monkee NFT</p>
+                            </div>
+                            <div className="relative justify-start w-64 h-32 minlg:w-6 minlg:h-6 cursor-pointer">
+                                <Image
+                                    src="/creator1.png"
+                                    layout="fill"
+                                    className="rounded-2xl m-4"
+                                />
+                            </div>
                         </div>
                     </div>
+                    <div>
+                        <p className='text-md font-semibold font-poppins sm:text-sm p-2  dark:text-black text-white'>Summary</p>
+
+                        <div className='flex flex-row cursor-pointer items-center p-2 dark:border-black border-white bg-gray-400 rounded-xl'>
+                            <div className='relative w-16 h-16 '>
+                                <Image
+                                    src="/creator1.png"
+                                    layout="fill"
+                                    className="rounded-2xl m-4"
+                                />
+                            </div>
+                            <button className=' text-md ml-20 outline-none sm:text-md font-semibold text-white font-poppins'>Purchase the NFT for 0.122 ETH</button>
+                        </div>
+                    </div>
+                    <button
+                        className="my-5 w-auto px-8 h-10 bg-blue-600 text-white rounded-md shadow hover:shadow-lg font-semibold"
+                        onClick={() => {
+                            setShowModal(false)
+                            setStateModal(false)
+                        }}
+                    >
+                        Close
+                    </button>
                 </div>
-            </div>
+            ) : null}
         </div>
     )
 }
